@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int              @id @default(autoincrement())
+  email       String           @unique
+  password    String
+  roles       UserRole[]       @relation("UserRoles") // Relación con UserRole
+  permissions UserPermission[] @relation("UserPermissions") // Relación con UserPermission
+}
+
+model Role {
+  id          Int              @id @default(autoincrement())
+  name        String           @unique
+  permissions RolePermission[] @relation("RolePermissions") // Relación con RolePermission
+  users       UserRole[]       @relation("RoleUserRoles") // Relación con UserRole
+}
+
+model UserRole {
+  userId Int
+  roleId Int
+  user   User @relation("UserRoles", fields: [userId], references: [id], onDelete: Cascade)
+  role   Role @relation("RoleUserRoles", fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId]) // Combinación de userId y roleId como clave primaria
+}
+
+model UserPermission {
+  userId       Int
+  permissionId Int
+  user         User       @relation("UserPermissions", fields: [userId], references: [id], onDelete: Cascade)
+  permission   Permission @relation("UserPermissionRelation", fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([userId, permissionId]) // Clave primaria
+}
+
+model Permission {
+  id    Int              @id @default(autoincrement())
+  name  String           @unique
+  users UserPermission[] @relation("UserPermissionRelation") // Relación con UserPermission
+  roles RolePermission[] @relation("PermissionRoles") // Relación con RolePermission
+}
+
+model RolePermission {
+  roleId       Int
+  permissionId Int
+  role         Role       @relation("RolePermissions", fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation("PermissionRoles", fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId]) // Clave primaria
+}
