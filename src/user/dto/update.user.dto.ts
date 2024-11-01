@@ -12,4 +12,9 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   password?:string;
+
+  @ApiProperty({ description: 'user name' })
+  @IsOptional()
+  @IsString()
+  name?:string;
 }
