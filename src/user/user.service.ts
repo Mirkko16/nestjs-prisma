@@ -5,6 +5,7 @@ import { CreateUserDto } from "./dto/create.user.dto";
 import { UpdateUserDto } from "./dto/update.user.dto";
 import { Prisma } from "@prisma/client";
 
+
 @Injectable()
 export class UserService {
     constructor(private prisma: PrismaService) { }
@@ -22,7 +23,8 @@ export class UserService {
     async createUser(data: CreateUserDto): Promise<User> {
         const UserData: Prisma.UserCreateInput = {
             email: data.email,
-            password: data.password
+            password: data.password,
+            name: data.name
         };
     
         return this.prisma.user.create({
