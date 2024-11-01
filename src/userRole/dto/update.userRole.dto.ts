@@ -1,15 +1,14 @@
-// src/role/dto/update-role.dto.ts
-import { IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional,  } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateUserRoleDto {
   @ApiProperty({ description: 'roleId' })
   @IsOptional()
-  @IsString()
+  @IsNumber()
   userId?: number;
 
   @ApiProperty({ description: 'permissionId' })
   @IsOptional()
-  @IsString()
+  @IsNumber()
   roleId?: number;
 }
