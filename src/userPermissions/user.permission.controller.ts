@@ -1,4 +1,4 @@
-import { Controller, Get, Delete, Put, Param, Body, Post } from "@nestjs/common";
+import { Controller, Get, Delete, Put, Param, Body, Post, ParseIntPipe } from "@nestjs/common";
 import { ApiResponse } from "@nestjs/swagger";
 import { UserPermissionService } from "./user.permission.service";
 import { UpdateUserPermissionDto } from "./dto/update.userPermission.dto";
@@ -6,7 +6,7 @@ import { CreateUserPermissionDto } from "./dto/create.userPermission.dto"
 
 @Controller('user-permission')
 export class UserPermissionController {
-  constructor(private readonly userPermissionService: UserPermissionService) {}
+  constructor(private readonly userPermissionService: UserPermissionService) { }
 
   @Get()
   @ApiResponse({ status: 200, description: 'Get all users permission' })
@@ -17,10 +17,10 @@ export class UserPermissionController {
   @Get(':userId/:permissionId')
   @ApiResponse({ status: 200, description: 'Get a user permission by User ID and Permission ID' })
   async getUserPermissionById(
-    @Param('userId') userId: string, 
-    @Param('permissionId') permissionId: string
+    @Param('userId', ParseIntPipe) userId: number,
+    @Param('permissionId', ParseIntPipe) permissionId: number
   ) {
-    return this.userPermissionService.getUserPermissionById(Number(userId), Number(permissionId));
+    return this.userPermissionService.getUserPermissionById(userId, permissionId);
   }
 
   @Post()
@@ -29,22 +29,22 @@ export class UserPermissionController {
     return this.userPermissionService.createUserPermission(data);
   }
 
-  @Delete(':UserId/:permissionId')
+  @Delete(':userId/:permissionId')
   @ApiResponse({ status: 200, description: 'Delete a user permission by User ID and Permission ID' })
-  async deleteRolePermissionById(
-    @Param('userId') userId: string, 
-    @Param('permissionId') permissionId: string
+  async deleteUserPermissionById(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Param('permissionId', ParseIntPipe) permissionId: number
   ) {
-    return this.userPermissionService.deleteUserPermissionById(Number(userId), Number(permissionId));
+    return this.userPermissionService.deleteUserPermissionById(userId, permissionId);
   }
 
   @Put(':userId/:permissionId')
   @ApiResponse({ status: 200, description: 'Update a user permission by User ID and Permission ID' })
   async updateUserPermission(
-    @Param('userId') userId: string, 
-    @Param('permissionId') permissionId: string, 
+    @Param('userId', ParseIntPipe) userId: number,
+    @Param('permissionId', ParseIntPipe) permissionId: number,
     @Body() data: UpdateUserPermissionDto
   ) {
-    return this.userPermissionService.updateUserPermission(Number(userId), Number(permissionId), data);
+    return this.userPermissionService.updateUserPermission(userId, permissionId, data);
   }
 }
