@@ -3,7 +3,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { UserRole } from "@prisma/client";
 import { CreateUserRoleDto } from "./dto/create.userRole.dto";
 import { UpdateUserRoleDto } from "./dto/update.userRole.dto";
-import { Prisma } from "@prisma/client";
+
 
 @Injectable()
 export class UserRoleService {

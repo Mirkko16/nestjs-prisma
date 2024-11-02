@@ -5,9 +5,10 @@ import { PermissionModule } from './permission/permission.module';
 import { RolePermissionModule } from './rolePermissions/role.permission.module';
 import { UserRoleModule } from './userRole/user.role.module';
 import { UserPermissionModule } from './userPermissions/user.permission.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [UserModule, RoleModule, PermissionModule, RolePermissionModule, UserRoleModule, UserPermissionModule],
+  imports: [AuthModule, UserModule, RoleModule, PermissionModule, RolePermissionModule, UserRoleModule, UserPermissionModule],
   controllers: [],
   providers: [],
 })

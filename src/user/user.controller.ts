@@ -1,18 +1,20 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from "@nestjs/common";
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create.user.dto";
 import { UpdateUserDto } from "./dto/update.user.dto";
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { AuthGuard } from "middlewares/auth.guard";
 
 
 @ApiTags('users')
 @Controller('user')
+@UseGuards(AuthGuard)
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Get()
   @ApiResponse({ status: 200, description: 'Get all users' })
-  async getAllusers() {
+  async getAllUsers() {
     return this.userService.getAllUsers();
   }
 
