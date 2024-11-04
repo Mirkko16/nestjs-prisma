@@ -10,8 +10,9 @@ export interface UserWithRoles {
     name: string;
     email: string;
     password: string;
-    roles: { name: string }[]; // La propiedad roles debe tener la forma correcta
+    roles: { id: number; name: string }[]; // Ahora incluye el ID del rol
 }
+
 
 
 @Injectable()
@@ -80,6 +81,7 @@ export class UserService {
                     select: {
                         role: {
                             select: {
+                                id: true, // Asegúrate de incluir el ID del rol
                                 name: true,
                             },
                         },
@@ -96,10 +98,12 @@ export class UserService {
             name: user.name,
             email: user.email,
             password: user.password,
-            roles: user.roles.map(userRole => ({ name: userRole.role.name })), // Mapea correctamente los roles
+            roles: user.roles.map(userRole => ({
+                id: userRole.role.id, 
+                name: userRole.role.name,
+            })), 
         };
     }
-
-
+    
 
 }

@@ -4,10 +4,11 @@ import { UserService } from './user.service';
 import { Prismamodule } from 'src/prisma/prisma.module';
 import { AuthModule } from 'src/auth/auth.module';
 
+
 @Module({
   controllers: [UserController],
   providers: [UserService],
-  imports: [Prismamodule, forwardRef(() => AuthModule)],
-  exports:[UserService]
+  imports: [Prismamodule, AuthModule],
+  exports: [UserService]
 })
-export class UserModule {}
+export class UserModule { }

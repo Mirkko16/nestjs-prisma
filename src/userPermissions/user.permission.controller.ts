@@ -1,10 +1,12 @@
-import { Controller, Get, Delete, Put, Param, Body, Post, ParseIntPipe } from "@nestjs/common";
-import { ApiResponse } from "@nestjs/swagger";
+import { Controller, Get, Delete, Put, Param, Body, Post, ParseIntPipe, UseGuards } from "@nestjs/common";
+import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
 import { UserPermissionService } from "./user.permission.service";
 import { UpdateUserPermissionDto } from "./dto/update.userPermission.dto";
 import { CreateUserPermissionDto } from "./dto/create.userPermission.dto"
+import { AuthGuard } from "middlewares/auth.guard";
 
 @Controller('user-permission')
+@ApiBearerAuth()
 export class UserPermissionController {
   constructor(private readonly userPermissionService: UserPermissionService) { }
 
@@ -24,12 +26,14 @@ export class UserPermissionController {
   }
 
   @Post()
+  @UseGuards(AuthGuard)
   @ApiResponse({ status: 201, description: 'Create a new user-permission' })
   async createUserPermission(@Body() data: CreateUserPermissionDto) {
     return this.userPermissionService.createUserPermission(data);
   }
 
   @Delete(':userId/:permissionId')
+  @UseGuards(AuthGuard)
   @ApiResponse({ status: 200, description: 'Delete a user permission by User ID and Permission ID' })
   async deleteUserPermissionById(
     @Param('userId', ParseIntPipe) userId: number,
@@ -39,6 +43,7 @@ export class UserPermissionController {
   }
 
   @Put(':userId/:permissionId')
+  @UseGuards(AuthGuard)
   @ApiResponse({ status: 200, description: 'Update a user permission by User ID and Permission ID' })
   async updateUserPermission(
     @Param('userId', ParseIntPipe) userId: number,
