@@ -1,9 +1,18 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
-import { User } from "@prisma/client";
 import { CreateUserDto } from "./dto/create.user.dto";
 import { UpdateUserDto } from "./dto/update.user.dto";
-import { Prisma } from "@prisma/client";
+import { Prisma, User as PrismaUser, UserRole } from "@prisma/client";
+import { User } from "@prisma/client"
+
+export interface UserWithRoles {
+    id: number;
+    name: string;
+    email: string;
+    password: string;
+    roles: { id: number; name: string }[]; // Ahora incluye el ID del rol
+}
+
 
 
 @Injectable()
@@ -26,7 +35,7 @@ export class UserService {
             password: data.password,
             name: data.name
         };
-    
+
         return this.prisma.user.create({
             data: UserData,
         });
@@ -44,4 +53,57 @@ export class UserService {
             where: { id },
         });
     }
+
+
+    async validateUser(name: string, password: string): Promise<UserWithRoles | null> {
+        const user = await this.findByUsername(name);
+        if (user && user.password === password) {
+            return user as UserWithRoles; // Asegúrate de que el tipo coincide
+        }
+        return null;
+    }
+
+
+    // Método findByUsername
+    async findByUsername(name: string): Promise<User | null> {
+        return await this.prisma.user.findUnique({
+            where: { name },
+            include: { roles: true },
+        });
+    }
+
+    // user.service.ts
+    async getUserWithRoles(userId: number): Promise<UserWithRoles> {
+        const user = await this.prisma.user.findUnique({
+            where: { id: userId },
+            include: {
+                roles: {
+                    select: {
+                        role: {
+                            select: {
+                                id: true, // Asegúrate de incluir el ID del rol
+                                name: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+    
+        // Si el usuario no existe, maneja el caso aquí
+        if (!user) throw new Error('User not found');
+    
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            roles: user.roles.map(userRole => ({
+                id: userRole.role.id, 
+                name: userRole.role.name,
+            })), 
+        };
+    }
+    
+
 }

@@ -1,10 +1,12 @@
-import { Controller, Get, Delete, Put, Param, Body, Post, ParseIntPipe } from "@nestjs/common";
-import { ApiResponse } from "@nestjs/swagger";
+import { Controller, Get, Delete, Put, Param, Body, Post, ParseIntPipe, UseGuards } from "@nestjs/common";
+import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
 import { UserRoleService } from "./user.role.service";
 import { UpdateUserRoleDto } from "./dto/update.userRole.dto";
 import { CreateUserRoleDto } from "./dto/create.userRole.dto";
+import { AuthGuard } from "middlewares/auth.guard";
 
 @Controller('user-role')
+@ApiBearerAuth()
 export class UserRoleController {
   constructor(private readonly userRoleService: UserRoleService) { }
 
@@ -24,6 +26,7 @@ export class UserRoleController {
   }
 
   @Post()
+  @UseGuards(AuthGuard)
   @ApiResponse({ status: 201, description: 'Create a new user-role' })
   async createUserRole(@Body() data: CreateUserRoleDto) {
     return this.userRoleService.createUserRole(data);
@@ -32,6 +35,7 @@ export class UserRoleController {
 
 
   @Delete(':userId/:roleId')
+  @UseGuards(AuthGuard)
   @ApiResponse({ status: 200, description: 'Delete a user role by User ID and Role ID' })
   async deleteUserRoleById(
     @Param('userId', ParseIntPipe) userId: number,
@@ -41,6 +45,7 @@ export class UserRoleController {
   }
 
   @Put(':userId/:roleId')
+  @UseGuards(AuthGuard)
   @ApiResponse({ status: 200, description: 'Update a user role by User ID and Role ID' })
   async updateUserRole(
     @Param('userId', ParseIntPipe) userId: number,

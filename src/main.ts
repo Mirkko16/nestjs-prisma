@@ -14,6 +14,7 @@ async function bootstrap() {
     .setTitle('Backend Assignment')
     .setDescription('Assignment Backend developer uses Nestjs, Prisma & PostgreSql')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
