@@ -3,7 +3,7 @@ import { PermissionService } from "./permission.service";
 import { CreatePermissionDto } from "./dto/create.permission.dto";
 import { UpdatePermissionDto } from "./dto/update.permission.dto";
 import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { AuthGuard } from "middlewares/auth.guard";
+import { AuthGuard } from "../../middlewares/auth.guard";
 
 
 @ApiTags('permissions')
@@ -27,14 +27,14 @@ export class PermissionController {
 
   @Get(':id')
   @ApiResponse({ status: 200, description: 'Get a permission by ID' })
-  async getPermissionById(@Param('id') id: string) {
+  async getPermissionById(@Param('id') id: number) {
     return this.permissionService.getPermissionById(Number(id));
   }
 
   @Delete(':id')
   @UseGuards(AuthGuard)
   @ApiResponse({ status: 200, description: 'Delete a permission by ID' })
-  async deletePermissionById(@Param('id') id: string) {
+  async deletePermissionById(@Param('id') id: number) {
     return this.permissionService.deletePermissionById(Number(id));
   }
 

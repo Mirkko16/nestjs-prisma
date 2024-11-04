@@ -3,7 +3,8 @@ import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create.user.dto";
 import { UpdateUserDto } from "./dto/update.user.dto";
 import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { AuthGuard } from "middlewares/auth.guard";
+import { AuthGuard } from "../../middlewares/auth.guard";
+import { UserDto } from "./dto/user.dto";
 
 
 
@@ -30,14 +31,14 @@ export class UserController {
 
   @Get(':id')
   @ApiResponse({ status: 200, description: 'Get a user by ID' })
-  async getUserById(@Param('id') id: string) {
-    return this.userService.getUserById(Number(id));
-  }
+  async getUserById(@Param('id') id: number): Promise<UserDto | null> {
+    return this.userService.getUserById(Number(id)); // Devuelve el UserDto sin la contraseña
+}
 
   @Delete(':id')
   @UseGuards(AuthGuard)
   @ApiResponse({ status: 200, description: 'Delete a user by ID' })
-  async deleteUserById(@Param('id') id: string) {
+  async deleteUserById(@Param('id') id: number) {
     return this.userService.deleteUserById(Number(id));
   }
 
