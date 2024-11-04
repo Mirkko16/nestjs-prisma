@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
 import { RolePermissionService } from "./role.permission.service";
 import { UpdateRolePermissionDto } from "./dto/update.rolePermission.dto";
 import { CreateRolePermissionDto } from "./dto/create.rolePermission.dto"
-import { AuthGuard } from "middlewares/auth.guard";
+import { AuthGuard } from "../../middlewares/auth.guard";
 
 @Controller('role-permission')
 @ApiBearerAuth()

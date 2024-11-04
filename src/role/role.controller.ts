@@ -3,7 +3,7 @@ import { RoleService } from "./role.service";
 import { CreateRoleDto } from "./dto/create.role.dto";
 import { UpdateRoleDto } from "./dto/update.role.dto";
 import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { AuthGuard } from "middlewares/auth.guard";
+import { AuthGuard } from "../../middlewares/auth.guard";
 
 @ApiTags('roles')
 @Controller('role')
@@ -26,14 +26,14 @@ export class RoleController {
 
   @Get(':id')
   @ApiResponse({ status: 200, description: 'Get a role by ID' })
-  async getRoleById(@Param('id') id: string) {
+  async getRoleById(@Param('id') id: number) {
     return this.roleService.getRoleById(Number(id));
   }
 
   @Delete(':id')
   @UseGuards(AuthGuard)
   @ApiResponse({ status: 200, description: 'Delete a role by ID' })
-  async deleteRoleById(@Param('id') id: string) {
+  async deleteRoleById(@Param('id') id: number) {
     return this.roleService.deleteRoleById(Number(id));
   }
 
