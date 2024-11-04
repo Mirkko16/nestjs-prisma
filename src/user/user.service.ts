@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaService } from "../prisma/prisma.service";
 import { CreateUserDto } from "./dto/create.user.dto";
 import { UpdateUserDto } from "./dto/update.user.dto";
 import { Prisma, User as PrismaUser, UserRole } from "@prisma/client";
 import { User } from "@prisma/client"
+import { UserDto } from "./dto/user.dto";
 
 export interface UserWithRoles {
     id: number;
@@ -19,13 +20,24 @@ export interface UserWithRoles {
 export class UserService {
     constructor(private prisma: PrismaService) { }
 
-    async getAllUsers(): Promise<User[]> {
-        return this.prisma.user.findMany();
+    async getAllUsers(): Promise<UserDto[]> {
+        const users = await this.prisma.user.findMany();
+        return users.map(user => new UserDto({ id: user.id, name: user.name, email: user.email }));
     }
 
-    async getUserById(id: number): Promise<User> {
-        return this.prisma.user.findUnique({
+    async getUserById(id: number): Promise<UserDto | null> {
+        const user = await this.prisma.user.findUnique({
             where: { id },
+        });
+
+        if (!user) {
+            return null;
+        }
+
+        return new UserDto({
+            id: user.id,
+            name: user.name,
+            email: user.email,
         });
     }
 
@@ -89,21 +101,21 @@ export class UserService {
                 },
             },
         });
-    
+
         // Si el usuario no existe, maneja el caso aquí
         if (!user) throw new Error('User not found');
-    
+
         return {
             id: user.id,
             name: user.name,
             email: user.email,
             password: user.password,
             roles: user.roles.map(userRole => ({
-                id: userRole.role.id, 
+                id: userRole.role.id,
                 name: userRole.role.name,
-            })), 
+            })),
         };
     }
-    
+
 
 }

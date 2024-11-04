@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
 import { UserRoleService } from "./user.role.service";
 import { UpdateUserRoleDto } from "./dto/update.userRole.dto";
 import { CreateUserRoleDto } from "./dto/create.userRole.dto";
-import { AuthGuard } from "middlewares/auth.guard";
+import { AuthGuard } from "../../middlewares/auth.guard";
 
 @Controller('user-role')
 @ApiBearerAuth()

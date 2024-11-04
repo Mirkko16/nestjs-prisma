@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
 import { UserPermissionService } from "./user.permission.service";
 import { UpdateUserPermissionDto } from "./dto/update.userPermission.dto";
 import { CreateUserPermissionDto } from "./dto/create.userPermission.dto"
-import { AuthGuard } from "middlewares/auth.guard";
+import { AuthGuard } from "../../middlewares/auth.guard";
 
 @Controller('user-permission')
 @ApiBearerAuth()
