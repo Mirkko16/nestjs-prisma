@@ -25,7 +25,7 @@ export class UserPermissionService {
             });
             return userPermission;
         } catch (error) {
-            console.error("Error fetching RolePermission:", error);
+            console.error("Error fetching UserPermission:", error);
             throw error;
         }
     }

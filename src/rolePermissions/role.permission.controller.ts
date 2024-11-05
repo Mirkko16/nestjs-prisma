@@ -11,7 +11,7 @@ export class RolePermissionController {
   constructor(private readonly rolePermissionService: RolePermissionService) { }
 
   @Get()
-  @ApiResponse({ status: 200, description: 'Get all permission roles' })
+  @ApiResponse({ status: 200, description: 'Get all roles permissions' })
   async getAllRolesPermission() {
     return this.rolePermissionService.getAllRolePermission();
   }

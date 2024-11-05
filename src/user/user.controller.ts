@@ -16,7 +16,7 @@ import { UserDto } from "./dto/user.dto";
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
-  @Get()  
+  @Get()
   @ApiResponse({ status: 200, description: 'Get all users' })
   async getAllUsers() {
     return this.userService.getAllUsers();
@@ -32,8 +32,8 @@ export class UserController {
   @Get(':id')
   @ApiResponse({ status: 200, description: 'Get a user by ID' })
   async getUserById(@Param('id') id: number): Promise<UserDto | null> {
-    return this.userService.getUserById(Number(id)); // Devuelve el UserDto sin la contraseña
-}
+    return this.userService.getUserById(Number(id));
+  }
 
   @Delete(':id')
   @UseGuards(AuthGuard)

@@ -12,7 +12,7 @@ export class AuthMiddleware implements NestMiddleware {
 
         if (token) {
             const user = this.authService.verifyToken(token);
-            req.user = user; // Almacena el usuario en el request
+            req.user = user;
         }
 
         next();

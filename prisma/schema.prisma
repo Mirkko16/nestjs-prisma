@@ -13,15 +13,15 @@ model User {
   name        String?          @unique
   email       String           @unique
   password    String
-  roles       UserRole[]       @relation("UserRoles") // Relación con UserRole
-  permissions UserPermission[] @relation("UserPermissions") // Relación con UserPermission
+  roles       UserRole[]       @relation("UserRoles")
+  permissions UserPermission[] @relation("UserPermissions")
 }
 
 model Role {
   id          Int              @id @default(autoincrement())
   name        String           @unique
-  permissions RolePermission[] @relation("RolePermissions") // Relación con RolePermission
-  users       UserRole[]       @relation("RoleUserRoles") // Relación con UserRole
+  permissions RolePermission[] @relation("RolePermissions")
+  users       UserRole[]       @relation("RoleUserRoles")
 }
 
 model UserRole {
@@ -30,7 +30,7 @@ model UserRole {
   user   User @relation("UserRoles", fields: [userId], references: [id], onDelete: Cascade)
   role   Role @relation("RoleUserRoles", fields: [roleId], references: [id], onDelete: Cascade)
 
-  @@id([userId, roleId]) // Combinación de userId y roleId como clave primaria
+  @@id([userId, roleId])
 }
 
 model UserPermission {
@@ -39,14 +39,14 @@ model UserPermission {
   user         User       @relation("UserPermissions", fields: [userId], references: [id], onDelete: Cascade)
   permission   Permission @relation("UserPermissionRelation", fields: [permissionId], references: [id], onDelete: Cascade)
 
-  @@id([userId, permissionId]) // Clave primaria
+  @@id([userId, permissionId])
 }
 
 model Permission {
   id    Int              @id @default(autoincrement())
   name  String           @unique
-  users UserPermission[] @relation("UserPermissionRelation") // Relación con UserPermission
-  roles RolePermission[] @relation("PermissionRoles") // Relación con RolePermission
+  users UserPermission[] @relation("UserPermissionRelation")
+  roles RolePermission[] @relation("PermissionRoles")
 }
 
 model RolePermission {
@@ -55,5 +55,5 @@ model RolePermission {
   role         Role       @relation("RolePermissions", fields: [roleId], references: [id], onDelete: Cascade)
   permission   Permission @relation("PermissionRoles", fields: [permissionId], references: [id], onDelete: Cascade)
 
-  @@id([roleId, permissionId]) // Clave primaria
+  @@id([roleId, permissionId])
 }

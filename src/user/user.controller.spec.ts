@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { AuthService } from '../auth/auth.service';
-import { AuthGuard } from '../middlewares/auth.guard'; // Si necesitas el AuthGuard en tus pruebas, también asegúrate de mockearlo.
-import { CreateUserDto } from './dto/create.user.dto'; // Asegúrate de importar CreateUserDto
+import { AuthGuard } from '../middlewares/auth.guard'; 
+import { CreateUserDto } from './dto/create.user.dto'; 
 describe('UserController', () => {
     let userController: UserController;
     let userService: UserService;
@@ -25,23 +25,20 @@ describe('UserController', () => {
                 {
                     provide: AuthService,
                     useValue: {
-                        // Aquí puedes mockear métodos de AuthService si los necesitas
                         validateUser: jest.fn(),
-                        // Agrega otros métodos necesarios según tu implementación
                     },
                 },
                 {
                     provide: AuthGuard,
                     useValue: {
-                        // Mockea el comportamiento de AuthGuard si es necesario
-                        canActivate: jest.fn().mockReturnValue(true), // Ejemplo de mock
+                        canActivate: jest.fn().mockReturnValue(true), 
                     },
                 },
             ],
         }).compile();
         userController = module.get<UserController>(UserController);
         userService = module.get<UserService>(UserService);
-        authService = module.get<AuthService>(AuthService); // Si es necesario
+        authService = module.get<AuthService>(AuthService);
     });
     describe('getAllUsers', () => {
         it('should return an array of users without passwords', async () => {

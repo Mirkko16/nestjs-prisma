@@ -6,7 +6,7 @@ import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [
-    forwardRef(() => UserModule), // Usando forwardRef aquí
+    forwardRef(() => UserModule),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1h' },

@@ -26,9 +26,9 @@ describe('UserPermissionController', () => {
                     },
                 },
                 {
-                    provide: UserService, // Añadir UserService simulado
+                    provide: UserService,
                     useValue: {
-                        findUserById: jest.fn(), // Agregar funciones simuladas necesarias para AuthGuard
+                        findUserById: jest.fn(),
                     },
                 },
                 {
@@ -146,7 +146,6 @@ describe('UserPermissionController', () => {
     
             jest.spyOn(userPermissionService, 'updateUserPermission').mockResolvedValue(result);
     
-            // Llamada con los tres argumentos necesarios
             const response = await userPermissionController.updateUserPermission(userId, permissionId, updatedData);
     
             expect(response).toEqual(result);
@@ -161,7 +160,6 @@ describe('UserPermissionController', () => {
     
             jest.spyOn(userPermissionService, 'updateUserPermission').mockRejectedValue(new Error(errorMessage));
     
-            // Llamada con los tres argumentos necesarios
             await expect(userPermissionController.updateUserPermission(userId, permissionId, updatedData)).rejects.toThrow(errorMessage);
         });
     });
