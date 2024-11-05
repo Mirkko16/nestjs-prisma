@@ -15,13 +15,13 @@ export class AuthGuard implements CanActivate {
         const authHeader = request.headers['authorization'];
 
         if (!authHeader) {
-            throw new UnauthorizedException('No tienes acceso');
+            throw new UnauthorizedException('You do not have permissions to do this action');
         }
 
         const [bearer, token] = authHeader.split(' ');
 
         if (bearer !== 'Bearer' || !token) {
-            throw new UnauthorizedException('Token no válido');
+            throw new UnauthorizedException('Invalid Token');
         }
 
         try {
@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
             // Verifica si el usuario existe en la base de datos
             const dbUser = await this.userService.getUserById(decoded.id);
             if (!dbUser) {
-                throw new ForbiddenException('No se encontró el usuario');
+                throw new ForbiddenException('User not found');
             }
 
             // Obtén el usuario con los roles
@@ -43,7 +43,7 @@ export class AuthGuard implements CanActivate {
             return isAdmin;
 
         } catch (error) {
-            throw new UnauthorizedException('Token no válido o expirado');
+            throw new UnauthorizedException('Invalid or expired token');
         }
     }
 }
