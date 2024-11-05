@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PermissionController } from './permission.controller';
 import { PermissionService } from './permission.service';
 import { AuthService } from '../auth/auth.service';
-import { AuthGuard } from '../../middlewares/auth.guard'; 
+import { AuthGuard } from '../middlewares/auth.guard'; 
 import { CreatePermissionDto } from './dto/create.permission.dto';
 import { UserService } from '../user/user.service';
 

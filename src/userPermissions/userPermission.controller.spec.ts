@@ -3,7 +3,7 @@ import { UserPermissionController } from './user.permission.controller';
 import { UserPermissionService } from './user.permission.service';
 import { UserService } from '../user/user.service';
 import { AuthService } from '../auth/auth.service';
-import { AuthGuard } from '../../middlewares/auth.guard';
+import { AuthGuard } from '../middlewares/auth.guard';
 import { CreateUserPermissionDto } from './dto/create.userPermission.dto';
 
 describe('UserPermissionController', () => {

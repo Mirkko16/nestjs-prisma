@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   app:
     build:
@@ -8,7 +6,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: "postgresql://postgres:daytona1309@db:5432/quorum"
+      DATABASE_URL: "postgresql://postgres:daytona1309@db:5432/quorumdb"
     depends_on:
       - db
 
@@ -17,7 +15,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: daytona1309
-      POSTGRES_DB: quorum
+      POSTGRES_DB: quorumdb
     ports:
       - "5432:5432"
     volumes:

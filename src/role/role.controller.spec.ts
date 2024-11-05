@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { RoleController } from './role.controller';
 import { RoleService } from './role.service';
 import { AuthService } from '../auth/auth.service';
-import { AuthGuard } from '../../middlewares/auth.guard'; 
+import { AuthGuard } from '../middlewares/auth.guard'; 
 import { CreateRoleDto } from './dto/create.role.dto';
 import { UserService } from '../user/user.service';
 

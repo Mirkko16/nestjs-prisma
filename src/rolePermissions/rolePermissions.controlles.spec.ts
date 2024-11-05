@@ -3,7 +3,7 @@ import { RolePermissionController } from './role.permission.controller';
 import { RolePermissionService } from './role.permission.service';
 import { UserService } from '../user/user.service';
 import { AuthService } from '../auth/auth.service';
-import { AuthGuard } from '../../middlewares/auth.guard';
+import { AuthGuard } from '../middlewares/auth.guard';
 import { CreateRolePermissionDto } from './dto/create.rolePermission.dto';
 
 describe('RolePermissionController', () => {

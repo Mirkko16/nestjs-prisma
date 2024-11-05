@@ -3,7 +3,7 @@ import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create.user.dto";
 import { UpdateUserDto } from "./dto/update.user.dto";
 import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { AuthGuard } from "../../middlewares/auth.guard";
+import { AuthGuard } from "../middlewares/auth.guard";
 import { UserDto } from "./dto/user.dto";
 
 

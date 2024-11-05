@@ -21,7 +21,7 @@ export class SeedService implements OnModuleInit {
                 data: {
                     name: 'Admin',
                     email: 'admin@example.com', 
-                    password: 'Admin@123',   
+                    password: 'Admin@123',  // Encriptar esta contraseña antes de guardarla
                 },
             });
             console.log('User Admin created.');

@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { AuthService } from '../auth/auth.service';
-import { AuthGuard } from '../../middlewares/auth.guard'; // Si necesitas el AuthGuard en tus pruebas, también asegúrate de mockearlo.
+import { AuthGuard } from '../middlewares/auth.guard'; // Si necesitas el AuthGuard en tus pruebas, también asegúrate de mockearlo.
 import { CreateUserDto } from './dto/create.user.dto'; // Asegúrate de importar CreateUserDto
 describe('UserController', () => {
     let userController: UserController;

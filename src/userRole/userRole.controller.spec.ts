@@ -3,7 +3,7 @@ import { UserRoleController } from './user.role.controller';
 import { UserRoleService } from './user.role.service';
 import { UserService } from '../user/user.service';
 import { AuthService } from '../auth/auth.service';
-import { AuthGuard } from '../../middlewares/auth.guard';
+import { AuthGuard } from '../middlewares/auth.guard';
 import { CreateUserRoleDto } from './dto/create.userRole.dto';
 
 describe('UserRoleController', () => {
