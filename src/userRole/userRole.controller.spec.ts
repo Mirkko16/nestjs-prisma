@@ -26,9 +26,9 @@ describe('UserRoleController', () => {
                     },
                 },
                 {
-                    provide: UserService, // Añadir UserService simulado
+                    provide: UserService,
                     useValue: {
-                        findUserById: jest.fn(), // Agregar funciones simuladas necesarias para AuthGuard
+                        findUserById: jest.fn(),
                     },
                 },
                 {
@@ -146,7 +146,7 @@ describe('UserRoleController', () => {
     
             jest.spyOn(userRoleService, 'updateUserRole').mockResolvedValue(result);
     
-            // Llamada con los tres argumentos necesarios
+            
             const response = await userRoleController.updateUserRole(userId, roleId, updatedData);
     
             expect(response).toEqual(result);
@@ -161,7 +161,6 @@ describe('UserRoleController', () => {
     
             jest.spyOn(userRoleService, 'updateUserRole').mockRejectedValue(new Error(errorMessage));
     
-            // Llamada con los tres argumentos necesarios
             await expect(userRoleController.updateUserRole(userId, roleId, updatedData)).rejects.toThrow(errorMessage);
         });
     });

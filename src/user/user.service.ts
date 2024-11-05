@@ -11,9 +11,8 @@ export interface UserWithRoles {
     name: string;
     email: string;
     password: string;
-    roles: { id: number; name: string }[]; // Ahora incluye el ID del rol
+    roles: { id: number; name: string }[];
 }
-
 
 
 @Injectable()
@@ -70,13 +69,11 @@ export class UserService {
     async validateUser(name: string, password: string): Promise<UserWithRoles | null> {
         const user = await this.findByUsername(name);
         if (user && user.password === password) {
-            return user as UserWithRoles; // Asegúrate de que el tipo coincide
+            return user as UserWithRoles;
         }
         return null;
     }
 
-
-    // Método findByUsername
     async findByUsername(name: string): Promise<User | null> {
         return await this.prisma.user.findUnique({
             where: { name },
@@ -84,7 +81,6 @@ export class UserService {
         });
     }
 
-    // user.service.ts
     async getUserWithRoles(userId: number): Promise<UserWithRoles> {
         const user = await this.prisma.user.findUnique({
             where: { id: userId },
@@ -93,7 +89,7 @@ export class UserService {
                     select: {
                         role: {
                             select: {
-                                id: true, // Asegúrate de incluir el ID del rol
+                                id: true,
                                 name: true,
                             },
                         },
@@ -102,7 +98,6 @@ export class UserService {
             },
         });
 
-        // Si el usuario no existe, maneja el caso aquí
         if (!user) throw new Error('User not found');
 
         return {

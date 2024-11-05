@@ -79,7 +79,7 @@ describe('RolePermissionController', () => {
 
         it('should handle errors during role permission creation', async () => {
             const createRolePermissionDto: CreateRolePermissionDto = { roleId: 2, permissionId: 2 };
-            const errorMessage = 'Error creating user permission';
+            const errorMessage = 'Error creating role permission';
 
             jest.spyOn(rolePermissionService, 'createRolePermission').mockRejectedValue(new Error(errorMessage));
 
@@ -146,7 +146,6 @@ describe('RolePermissionController', () => {
     
             jest.spyOn(rolePermissionService, 'updateRolePermission').mockResolvedValue(result);
     
-            // Llamada con los tres argumentos necesarios
             const response = await rolePermissionController.updateRolePermission(roleId, permissionId, updatedData);
     
             expect(response).toEqual(result);
@@ -161,7 +160,6 @@ describe('RolePermissionController', () => {
     
             jest.spyOn(rolePermissionService, 'updateRolePermission').mockRejectedValue(new Error(errorMessage));
     
-            // Llamada con los tres argumentos necesarios
             await expect(rolePermissionController.updateRolePermission(roleId, permissionId, updatedData)).rejects.toThrow(errorMessage);
         });
     });

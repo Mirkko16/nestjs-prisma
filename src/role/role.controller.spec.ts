@@ -26,29 +26,15 @@ describe('RoleController', () => {
                     },
                 },
                 {
-                    provide: UserService, // Añadir UserService simulado
+                    provide: UserService,
                     useValue: {
-                        findUserById: jest.fn(), // Agregar funciones simuladas necesarias para AuthGuard
+                        findUserById: jest.fn(),
                     },
                 },
                 {
                     provide: AuthService,
                     useValue: {
                         validateUser: jest.fn(),
-                    },
-                },
-                {
-                    provide: AuthGuard,
-                    useValue: {
-                        canActivate: jest.fn().mockReturnValue(true),
-                    },
-                },
-                {
-                    provide: AuthService,
-                    useValue: {
-                        
-                        validateUser: jest.fn(),
-                        
                     },
                 },
                 {
@@ -62,7 +48,7 @@ describe('RoleController', () => {
         }).compile();
         roleController = module.get<RoleController>(RoleController);
         roleService = module.get<RoleService>(RoleService);
-        authService = module.get<AuthService>(AuthService); // Si es necesario
+        authService = module.get<AuthService>(AuthService);
     });
     describe('getAllRoles', () => {
         it('should return an array of roles', async () => {

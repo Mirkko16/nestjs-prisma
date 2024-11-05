@@ -25,20 +25,16 @@ export class AuthGuard implements CanActivate {
         }
 
         try {
-            // Verifica el token usando AuthService
             const decoded: JwtPayload = await this.authService.verifyToken(token);
-            request.user = decoded; // Asigna el usuario decodificado a la solicitud
+            request.user = decoded; 
 
-            // Verifica si el usuario existe en la base de datos
             const dbUser = await this.userService.getUserById(decoded.id);
             if (!dbUser) {
                 throw new ForbiddenException('User not found');
             }
 
-            // Obtén el usuario con los roles
             const userWithRoles = await this.userService.getUserWithRoles(decoded.id);
 
-            // Verifica si el usuario tiene el rol de administrador
             const isAdmin = userWithRoles.roles.some(role => role.id === 1);
             return isAdmin;
 

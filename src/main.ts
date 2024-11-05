@@ -11,19 +11,19 @@ async function connectToDatabase() {
   while (attempts < 5) {
     try {
       await prisma.$connect();
-      console.log('Conectado a la base de datos');
+      console.log('Connected to the database');
       return;
     } catch (error) {
-      console.error('No se pudo conectar a la base de datos, intentando de nuevo...', error);
+      console.error('Could not connect to database, trying again...', error);
       attempts++;
-      await new Promise(resolve => setTimeout(resolve, 5000)); // Espera 5 segundos antes de volver a intentar
+      await new Promise(resolve => setTimeout(resolve, 5000));
     }
   }
-  throw new Error('No se pudo conectar a la base de datos después de varios intentos');
+  throw new Error('Could not connect to database after several attempts');
 }
 
 async function bootstrap() {
-  await connectToDatabase(); // Llama a la función aquí antes de continuar
+  await connectToDatabase();
 
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
@@ -44,5 +44,5 @@ async function bootstrap() {
 
 bootstrap().catch(err => {
   console.error(err);
-  process.exit(1); // Termina el proceso si hay un error
+  process.exit(1);
 });

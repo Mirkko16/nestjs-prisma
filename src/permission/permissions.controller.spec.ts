@@ -26,9 +26,9 @@ describe('PermissionController', () => {
                     },
                 },
                 {
-                    provide: UserService, // Añadir UserService simulado
+                    provide: UserService, 
                     useValue: {
-                        findUserById: jest.fn(), // Agregar funciones simuladas necesarias para AuthGuard
+                        findUserById: jest.fn(),
                     },
                 },
                 {
@@ -50,7 +50,7 @@ describe('PermissionController', () => {
         }).compile();
         permissionController = module.get<PermissionController>(PermissionController);
         permissionService = module.get<PermissionService>(PermissionService);
-        authService = module.get<AuthService>(AuthService); // Si es necesario
+        authService = module.get<AuthService>(AuthService);
     });
     describe('getAllPermissions', () => {
         it('should return an array of permissions', async () => {
